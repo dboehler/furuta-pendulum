@@ -1,1 +1,1 @@
-# furuta.github.io
+# furuta

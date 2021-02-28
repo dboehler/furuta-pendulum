@@ -1,1 +1,1 @@
-# furuta
+# furuta pendulum

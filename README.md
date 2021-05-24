@@ -49,7 +49,8 @@ The Furuta pendulum has been in use since 1992, when it was invented by Katsuhis
 - If the system contains hardware, the design of hardware should consist the necessary architectural explanations such as hardware and software relationships.
 
 ## 3. Modeling
-The system consists of 2 masses, arm 1 m in the horizontal plane, and arm 2 the pendulum, which rotates freely in the vertical plane . In addition to a link connecting arm 1 and the pendulum, that is fixed. Figure 2 depicts a DC motor applying torque to arm 1 m, which moves horizontally then controlling the pendulum so it may remain in the upright position. The torque t is a critical component used in the feedback control system, which is done using a state-space model. The angular rotation from arm 1, 0is measured in the horizontal plane, where it is assumed that the counter clockwise direction is considered to be positive. The angular rotation from the pendulum 1is measured in the vertical plane, where it is also to be assumed that the counter clockwise direction is positive. The system is stable when the pendulum arm is hanging down in a stable position 1=0.
+The system consists of 2 masses, arm 1 m in the horizontal plane, and arm 2 the pendulum, which rotates freely in the vertical plane. In addition to a link connecting arm 1 and the pendulum, that is fixed, Figure 2 depicts a DC motor applying torque to arm 1 m, which moves horizontally then controls the pendulum so it may remain in the upright position. The torque t is a critical component used in the feedback control system, which is done using a state-space model. The angular rotation from arm 1, 0is measured in the horizontal plane, where it is assumed that the counter clockwise direction is considered to be positive. The angular rotation from the pendulum 1is measured in the vertical plane, where it is also to be assumed that the counter clockwise direction is positive. The system is stable when the pendulum arm is in the upright vertical position 1=n*2𝜋.
+
 <p align="center">  
     <img src="Photos/figure2.png">
     <br/>
@@ -59,11 +60,26 @@ The system consists of 2 masses, arm 1 m in the horizontal plane, and arm 2 the 
 
 
 ### 3a. Linear Space Model
-When deriving the system dynamics assumptions must be considered. Firstly the motor and arm 1 are rigidly coupled and inelastic. In addition the coordinate axes of arms 1 and 2 are the principal axes of inertia. However, the motor rotor inertia is also assumed to be negligible, so the viscous damping is the only one to be considered.      
-State-space equation is used as a mathematical model that represents the pendulum’s physical system. The pendulum system is represented by a set of inputs, outputs, and state variables related by first-order differential equations. Eq 1 and Eq 2 can be found below representing 
+When deriving the system dynamics, assumptions must be considered. Firstly, the motor and arm 1 are rigidly coupled and inelastic. In addition, the coordinate axes of arms 1 and 2 are the principal axes of inertia. However, the motor rotor inertia is also assumed to be negligible, so the viscous damping is the only one to be considered.      
+State-space equation is used as a mathematical model that represents the pendulum’s physical system. The pendulum system is represented by a set of inputs, outputs, and state variables related by first-order differential equations. Eq 1 and Eq 2 can be found below representing the inputs u  and outputs x, as well as the state space variable vector state x of the pendulum system. 
 
+<p align="center">  
+    <img src="Photos/Eq.png">
+    <br/>
+    
+</p>
+
+While the state matrix A, input matrix B, output matrix C, and the forward matrix D can be solved using dynamic systems of equations found within Eq 1 and Eq 2. Table 1 below depicts the results for each state-space variable, in addition to the open loop pole coordinates. 
+
+<p align="center">
+    Table 1 Parameter Results<br/>
+    <img src="Photos/parameter results.png">
+    <br/>
+    
+</p>
 
 ## 4. Sensor Calibration
+The pendulum has an encoder which is traditionally used for calibration purposes. However, in the following report, Coppelia Sim, a computer application, is used as a live calibration device through Matlab code. The four state variables are directly read through the CoppeliaSim remote API, since the API provides functions to determine the angular position and velocity of any object in the scene.
 
 ## 5. Controller Design and Simulations
 
@@ -155,7 +171,34 @@ State-space equation is used as a mathematical model that represents the pendulu
     sim.delete();
 </details>
 
+Figure 3 provides a representation of the physical pendulum system model used as a constant calibration device.
+
+<p align="center">  
+    <img src="Photos/model.png">
+    <br/>
+    Figure 3
+    
+</p>
+
 ## 6. Results
+
+Figure 4 provides the calculated parameters after adding the full state feedback controller K. The output parameters are negative, meaning the system is stable.
+
+<p align="center">  
+    <img src="Photos/values.png">
+    <br/>
+    Figure 4
+    
+</p>
+
+The eigenvalues found from matrix A can be found depicted below with in Figure 5, it is shown going to zero, thus showing the systems stability.
+
+<p align="center">  
+    <img src="Photos/pendulum stab.png">
+    <br/>
+    Figure 5
+    
+</p>
 
 ## 7. References
 Duart, J. L., et al. "Dynamic modeling and simulation of a rotational inverted pendulum." Journal of Physics: Conference Series. Vol. 792. No. 1. IOP Publishing, 2017.<br/>
